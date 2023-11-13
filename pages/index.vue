@@ -144,7 +144,7 @@ const members = ref([
     border-radius: 10px;
     border: 1px solid $border-color;
     background: #fff;
-    backdrop-filter: blur(2px);
+    //backdrop-filter: blur(2px);
   }
 
   &__members {
