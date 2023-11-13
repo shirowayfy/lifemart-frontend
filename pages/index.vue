@@ -346,6 +346,9 @@ const members = ref([
 
   &__member {
     padding: 20px;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
 
     &-title {
       text-align: center;
