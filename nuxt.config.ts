@@ -16,5 +16,8 @@ export default defineNuxtConfig({
     },
   },
   ssr: false,
+  image: {
+    provider: "netlify",
+  },
   modules: ["@nuxt/image", "nuxt-icons"],
 });
