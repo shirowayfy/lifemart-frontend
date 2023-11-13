@@ -165,7 +165,7 @@ const members = ref([
     }
 
     &-items {
-      overflow: scroll;
+      overflow: auto;
       flex-grow: 1;
     }
 
