@@ -133,7 +133,7 @@ const members = ref([
 <style lang="scss" scoped>
 .dashboard {
   $this: &;
-  padding: 25px;
+  padding: 25px 0 25px 25px;
   height: 100%;
 
   display: grid;
