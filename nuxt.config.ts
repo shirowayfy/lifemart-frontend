@@ -19,5 +19,9 @@ export default defineNuxtConfig({
   image: {
     provider: "netlify",
   },
-  modules: ["@nuxt/image", "nuxt-icons"],
+  icon: {
+    size: "24px", // default <Icon> size applied
+    class: "icon", // default <Icon> class applied
+  },
+  modules: ["@nuxt/image", "nuxt-icon"],
 });

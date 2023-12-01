@@ -30,11 +30,12 @@ h5,
 h6,
 p {
   margin: 0;
+  font-weight: 500;
 }
 
-.nuxt-icon svg {
-  margin-bottom: 0 !important;
-  vertical-align: initial !important;
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
 .btn {
@@ -48,11 +49,17 @@ p {
   font-size: 14px;
   font-weight: 400;
   line-height: 20px;
+
+  cursor: pointer;
 }
 
-.container {
-  padding: 0 40px 0 90px;
-  max-width: 1830px;
-  width: calc(100vw);
-  margin: 0 auto;
+.h-screen {
+  height: 100vh;
 }
+
+//.container {
+//  padding: 0 40px 0 90px;
+//  max-width: 1830px;
+//  width: calc(100vw);
+//  margin: 0 auto;
+//}

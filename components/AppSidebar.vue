@@ -1,100 +1,79 @@
 <template>
-  <aside class="sidebar">
-    <NuxtLink to="/" class="sidebar__logo">
-      <NuxtImg src="/logo.svg" alt="" />
+  <aside class="h-screen sidebar">
+    <NuxtLink to="/" class="logo">
+      <NuxtImg class="logo__icon" src="/logo.svg" alt="" />
     </NuxtLink>
-    <div class="sidebar__items">
-      <NuxtLink
-        v-for="button in buttons"
-        :key="button.icon"
-        to="#"
-        class="sidebar__items-btn"
-        role="button"
-      >
-        <NuxtIcon :name="`${button.icon}`" filled />
-      </NuxtLink>
-    </div>
+    <nav class="nav">
+      <ul class="nav__links">
+        <li class="nav__links-item active">
+          <NuxtLink class="nav-link" to="/">
+            <Icon class="nav-link__icon" name="ph:chat-text" />
+          </NuxtLink>
+        </li>
+        <li class="nav__links-item">
+          <NuxtLink class="nav-link" to="/">
+            <Icon class="nav-link__icon" name="ph:chart-line" />
+          </NuxtLink>
+        </li>
+        <li class="nav__links-item">
+          <NuxtLink class="nav-link" to="/">
+            <Icon class="nav-link__icon" name="ph:address-book" />
+          </NuxtLink>
+        </li>
+      </ul>
+    </nav>
   </aside>
 </template>
 
-<script setup>
-const buttons = [
-  {
-    icon: "pen",
-    href: "#",
-  },
-  {
-    icon: "stats",
-    href: "#",
-  },
-  {
-    icon: "list",
-    href: "#",
-  },
-];
-</script>
+<script setup></script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .sidebar {
-  height: 100vh;
-  width: 90px;
-  background: #fff;
-
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 100;
-
   border-right: 1px solid $border-color;
+}
 
-  &__logo {
-    padding: 10px;
-    width: 90px;
-    height: 90px;
+.logo {
+  display: block;
+  padding: 8px;
+  border-bottom: 1px solid $border-color;
 
+  height: 90px;
+
+  margin-bottom: 25px;
+
+  &__icon {
+    width: 75px;
+  }
+}
+
+.nav {
+  &__links {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    gap: 15px;
 
-    border-bottom: 1px solid $border-color;
+    &-item {
+      border-radius: 8px;
+      transition: all 0.2s;
+      color: darkgray;
 
-    img {
-      width: 100%;
-      height: 100%;
+      &.active,
+      &:hover {
+        background: rgba($primary, 0.1);
+        color: $primary;
+      }
     }
   }
 
-  &__items {
-    width: 90px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  .nav-link {
+    display: block;
+    text-align: center;
 
-    padding: 20px;
+    padding: 8px;
 
-    &-btn {
-      padding: 13px;
-
-      border-radius: 50%;
-      border: 1px solid $primary;
-
-      transition: all 0.2s;
-      & .nuxt-icon {
-        width: 22px;
-        height: 22px;
-        display: flex;
-
-        svg {
-          font-size: 22px;
-        }
-      }
-
-      &:hover,
-      &.active {
-        --fill-color: $primary;
-        --icon-color: white;
-        background: $primary;
-      }
+    &__icon {
+      font-size: 28px;
     }
   }
 }

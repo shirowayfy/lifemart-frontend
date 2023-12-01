@@ -1,10 +1,10 @@
 <template>
   <div class="app">
-    <AppHeader />
     <AppSidebar />
-    <div class="container page">
-      <NuxtPage />
-    </div>
+    <main class="h-screen main">
+      <AppHeader />
+      <NuxtPage class="main__content" />
+    </main>
   </div>
 </template>
 
@@ -12,13 +12,21 @@
 
 <style lang="scss">
 .app {
-  height: 100vh;
   display: flex;
-  flex-direction: column;
+  align-items: flex-start;
+
+  background: #fff;
+  min-height: 100vh;
 }
 
-.page {
+.main {
+  display: flex;
+  flex-direction: column;
   flex-grow: 1;
-  overflow: auto;
+
+  &__content {
+    flex-grow: 1;
+    padding: 25px;
+  }
 }
 </style>

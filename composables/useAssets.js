@@ -3,6 +3,5 @@ export const useAssets = (path) => {
     eager: true,
     import: "default",
   });
-  // @ts-expect-error: wrong type info
   return assets["/assets/" + path];
 };
