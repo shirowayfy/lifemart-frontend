@@ -1,24 +1,13 @@
 <template>
-  <button class="base-icon-button">
-    <Icon :size="size" :name="icon" />
+  <button class="base-simple-button">
+    <slot />
   </button>
 </template>
 
-<script setup>
-defineProps({
-  icon: {
-    type: String,
-    required: true,
-  },
-  size: {
-    type: [Number, String],
-    default: 18,
-  },
-});
-</script>
+<script setup></script>
 
 <style lang="scss" scoped>
-.base-icon-button {
+.base-simple-button {
   display: flex;
   align-items: center;
   justify-content: center;

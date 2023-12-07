@@ -5,14 +5,21 @@
         <h3 class="dashboard__box-title">Обращения</h3>
         <div class="dashboard__box-row">
           <BaseInput icon="ph:magnifying-glass" placeholder="Поиск..." />
-          <BaseIconButton icon="ph:faders-horizontal" size="24" />
+          <BaseSimpleButton>
+            <Icon name="ph:faders-horizontal" size="24" />
+          </BaseSimpleButton>
         </div>
       </div>
       <div class="dashboard__box-content requests-content">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo ipsum a ex
-        deserunt tempora neque quas aspernatur consectetur ullam veniam soluta
-        voluptatem provident similique commodi ipsam, blanditiis harum optio
-        delectus?
+        <RequestItem
+          class="active"
+          online
+          time="2 мин."
+          :unread="2"
+          :message="text"
+        />
+        <RequestItem time="Сегодня" :message="text" />
+        <RequestItem time="2 окт." :message="text" />
       </div>
     </div>
     <div class="dashboard__box"></div>
@@ -24,7 +31,9 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+const text = ref("Lorem ipsum dolor sit amet");
+</script>
 
 <style lang="scss" scoped>
 .dashboard {
@@ -79,6 +88,15 @@
       .requests__icon {
         font-size: 16px;
         display: none;
+      }
+    }
+
+    &-content {
+      //margin-top: 15px;
+      padding: 0 0 15px;
+
+      & .request-item:last-of-type {
+        border-bottom: none;
       }
     }
   }
