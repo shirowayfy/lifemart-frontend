@@ -3,6 +3,10 @@
     <div class="dashboard__box requests">
       <div class="dashboard__box-header">
         <h3 class="dashboard__box-title">Обращения</h3>
+        <div class="dashboard__box-row">
+          <BaseInput icon="ph:magnifying-glass" placeholder="Поиск..." />
+          <BaseIconButton icon="ph:faders-horizontal" size="24" />
+        </div>
       </div>
       <div class="dashboard__box-content requests-content">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo ipsum a ex
@@ -32,10 +36,6 @@
   gap: 25px;
 
   &__box {
-    //background: #fff;
-    //border-radius: 8px;
-    //border: 1px solid $border-color;
-    /* From https://css.glass */
     background: rgba(#fff, 0.6);
     border-radius: 10px;
     border: 1px solid $border-color;
@@ -49,7 +49,13 @@
 
     &-title {
       font-size: 20px;
-      margin-bottom: 5px;
+      margin-bottom: 10px;
+    }
+
+    &-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
     &-content {
