@@ -1,11 +1,23 @@
 <template>
-  <label for="test" class="base-input" :class="{ 'with-icon': !!icon }">
+  <label
+    for="test"
+    class="base-input"
+    :class="{ 'with-icon': !!icon, disabled }"
+  >
     <Icon size="20" v-if="icon" class="nav-link__icon" :name="icon" />
-    <input :placeholder="placeholder" :type="text" id="test" />
+    <input
+      v-model="modelValue"
+      :placeholder="placeholder"
+      :type="type"
+      id="test"
+      :disabled="disabled"
+    />
   </label>
 </template>
 
 <script setup>
+const modelValue = defineModel();
+
 defineProps({
   icon: {
     type: String,
@@ -16,6 +28,10 @@ defineProps({
   type: {
     type: String,
     default: "text",
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
   },
 });
 </script>
@@ -28,6 +44,14 @@ defineProps({
   border: 1px solid $border-color;
   overflow: hidden;
   width: 100%;
+
+  &.disabled {
+    pointer-events: none;
+
+    input {
+      background: $pale-green;
+    }
+  }
 
   &.with-icon {
     input {

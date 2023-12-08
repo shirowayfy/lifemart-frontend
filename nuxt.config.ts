@@ -3,6 +3,12 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ["@/assets/styles/base.scss"],
   vite: {
+    vue: {
+      script: {
+        defineModel: true,
+        propsDestructure: true,
+      },
+    },
     css: {
       preprocessorOptions: {
         scss: {
@@ -23,5 +29,8 @@ export default defineNuxtConfig({
     size: "24px", // default <Icon> size applied
     class: "icon", // default <Icon> class applied
   },
-  modules: ["@nuxt/image", "nuxt-icon"],
+  modules: ["@nuxt/image", "nuxt-icon", "@pinia/nuxt"],
+  pinia: {
+    storesDirs: ["./stores/**"],
+  },
 });

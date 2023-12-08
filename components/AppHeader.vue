@@ -11,6 +11,7 @@
 .header {
   height: 90px;
   text-align: center;
+  flex-shrink: 0;
 
   display: flex;
   justify-content: space-between;

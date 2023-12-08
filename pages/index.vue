@@ -12,26 +12,48 @@
       </div>
       <div class="dashboard__box-content requests-content">
         <RequestItem
+          v-for="(request, key) in requests"
+          :key="key"
           class="active"
           online
           time="2 мин."
-          :unread="2"
-          :message="text"
+          :message="request.messages[request.messages.length - 1].text"
+          :name="request.name"
+          @click="setActiveRequest(key)"
         />
-        <RequestItem time="Сегодня" :message="text" />
-        <RequestItem time="2 окт." :message="text" />
+        <p class="empty" v-if="!Object.keys(requests).length">
+          Нет активных обращений
+        </p>
       </div>
     </div>
-    <div class="dashboard__box"></div>
-    <div class="dashboard__box">
+    <div class="dashboard__box chat-box">
+      <Chat v-if="activeRequest" />
+      <p class="empty" v-else>Выберите чат</p>
+    </div>
+    <div class="dashboard__box info">
       <div class="dashboard__box-header">
         <h3 class="dashboard__box-title">Данные клиента</h3>
+      </div>
+      <div class="dashboard__box-content">
+        <div v-if="activeRequest">
+          <p>Клиент: {{ activeRequestData.name }}</p>
+          <p>Магазин: Ленина 32</p>
+          <p>Количество обращений: 0</p>
+        </div>
+        <p class="empty" v-else>Выберите клиента</p>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
+import { storeToRefs } from "pinia";
+
+const store = useAppStore();
+const { setActiveRequest, resetActiveRequest } = store;
+const { requests, activeRequest } = storeToRefs(store);
+
+const activeRequestData = computed(() => requests.value[activeRequest.value]);
 const text = ref("Lorem ipsum dolor sit amet");
 </script>
 
@@ -44,6 +66,14 @@ const text = ref("Lorem ipsum dolor sit amet");
   grid-template-columns: 2.5fr 7fr 2.5fr;
   gap: 25px;
 
+  height: 100%;
+
+  & .empty {
+    padding: 0 12px;
+    color: $grey;
+    font-size: 16px;
+  }
+
   &__box {
     background: rgba(#fff, 0.6);
     border-radius: 10px;
@@ -51,6 +81,18 @@ const text = ref("Lorem ipsum dolor sit amet");
 
     display: flex;
     flex-direction: column;
+
+    overflow: hidden;
+
+    &.chat-box {
+      .empty {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 15px;
+        height: 100%;
+      }
+    }
 
     &-header {
       padding: 15px;
@@ -98,6 +140,16 @@ const text = ref("Lorem ipsum dolor sit amet");
       & .request-item:last-of-type {
         border-bottom: none;
       }
+    }
+  }
+
+  .info {
+    & .dashboard__box-title {
+      margin-bottom: 0;
+    }
+
+    .empty {
+      padding: 0;
     }
   }
 }

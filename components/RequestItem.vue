@@ -5,11 +5,11 @@
       <div class="request-item__status" :class="{ completed, online }"></div>
     </div>
     <div class="request-item__content">
-      <p class="request-item__name">Иванов Иван</p>
+      <p class="request-item__name">{{ name }}</p>
       <div class="request-item__info">
         <span>{{ formattedMessage }}</span>
-        <span class="dot"></span>
-        <span>{{ time }}</span>
+        <!--<span class="dot"></span>
+        <span>{{ time }}</span>-->
       </div>
     </div>
     <BaseSimpleButton v-if="unread > 0" class="request-item__unread">{{
@@ -39,13 +39,17 @@ const props = defineProps({
   message: {
     type: String,
   },
+  name: {
+    type: String,
+    required: true,
+  },
 });
 
 const formattedMessage = computed(() => {
   if (props.unread > 0) {
     return props.message.slice(0, 15) + "...";
   }
-  return props.message.slice(0, 20) + "...";
+  return props.message.slice(0, 15) + "...";
 });
 </script>
 
@@ -74,6 +78,8 @@ const formattedMessage = computed(() => {
     position: relative;
     width: 50px;
     height: 50px;
+
+    flex-shrink: 0;
 
     img {
       width: 100%;

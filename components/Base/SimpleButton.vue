@@ -17,5 +17,11 @@
   border: 1px solid $border-color;
   flex-shrink: 0;
   background: transparent;
+  cursor: pointer;
+
+  &.green {
+    background: $primary;
+    color: #fff;
+  }
 }
 </style>
