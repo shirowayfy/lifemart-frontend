@@ -11,31 +11,42 @@ import io from "socket.io-client";
 import { storeToRefs } from "pinia";
 
 const store = useAppStore();
-const { setSocket, addRequest, setUserId, addMessage } = store;
-const { user, activeRequest } = storeToRefs(store);
+const { setUser } = store;
+const { activeRequest } = storeToRefs(store);
+
+const user = useStrapiUser();
+const token = useStrapiToken();
+
+setUser(user.value);
+
+watch(
+  user,
+  () => {
+    if (user.value) {
+      const socket = io("ws://localhost:1337", {
+        query: {
+          jwt: token.value,
+        },
+      });
+
+      socket.emit("join");
+    }
+  },
+  { immediate: true }
+);
 
 onMounted(() => {
-  const socket = io("ws://localhost:3500");
-  socket.emit("enterRoom", {
-    name: "Petr",
-    room: "1",
-  });
-  socket.on("message", (data) => {
-    if (data.name === "Admin" && !data.action) return;
-
-    if (data.action === "join") {
-      setUserId(data.id);
-    } else {
-      const { id, name, text, time } = data;
-
-      if (id === user.value.id) {
-        addMessage(activeRequest.value, id, text, time);
-      } else {
-        addRequest(id, name, text, time);
-      }
-    }
-  });
-  setSocket(socket);
+  //socket.emit("join", {});
+  //console.log(socket.id);
+  //socket.emit("join", {
+  //  username: "Василий",
+  //  userId: "1",
+  //  //groupId: 5,
+  //  message: "Privet",
+  //});
+  //socket.emit("message", {
+  //  text: "dsafkdsfkj",
+  //});
 });
 </script>
 

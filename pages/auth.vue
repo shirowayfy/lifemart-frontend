@@ -4,14 +4,14 @@
       <img class="auth__logo" src="/logo-white.svg" alt="" />
     </div>
     <div class="auth__right">
-      <div class="auth__form">
+      <form class="auth__form" @submit.prevent="submit">
         <h1 class="auth__title">Войти в аккаунт</h1>
         <span>Логин</span>
-        <BaseInput />
+        <BaseInput v-model="email" />
         <span>Пароль</span>
-        <BaseInput type="password" />
-        <BaseButton @click="$router.push('/')">Войти</BaseButton>
-      </div>
+        <BaseInput v-model="password" type="password" />
+        <BaseButton>Войти</BaseButton>
+      </form>
     </div>
   </div>
 </template>
@@ -20,6 +20,28 @@
 definePageMeta({
   layout: "empty",
 });
+
+const { setUser } = useAppStore();
+
+const { login } = useStrapiAuth();
+const router = useRouter();
+
+const email = ref("alex@gmail.com");
+const password = ref("qwerty");
+
+const submit = async () => {
+  try {
+    await login({ identifier: email.value, password: password.value });
+
+    const user = useStrapiUser();
+
+    if (user.value) {
+      setUser(user.value);
+    }
+
+    router.push("/");
+  } catch (e) {}
+};
 </script>
 
 <style lang="scss" scoped>

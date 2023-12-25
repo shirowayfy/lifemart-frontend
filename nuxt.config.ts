@@ -29,7 +29,7 @@ export default defineNuxtConfig({
     size: "24px", // default <Icon> size applied
     class: "icon", // default <Icon> class applied
   },
-  modules: ["@nuxt/image", "nuxt-icon", "@pinia/nuxt"],
+  modules: ["@nuxt/image", "nuxt-icon", "@pinia/nuxt", "@nuxtjs/strapi"],
   pinia: {
     storesDirs: ["./stores/**"],
   },

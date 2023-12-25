@@ -4,10 +4,7 @@ export const useAppStore = defineStore("app", {
   state: () => {
     return {
       socket: null,
-      user: {
-        id: "test",
-        name: "Петр Петров",
-      },
+      user: null,
       activeRequest: null,
       requests: {},
     };
@@ -16,8 +13,8 @@ export const useAppStore = defineStore("app", {
     setSocket(socket) {
       this.socket = socket;
     },
-    setUserId(id) {
-      this.user.id = id;
+    setUser(user) {
+      this.user = user;
     },
     addMessage(id, from, text, time) {
       this.requests[id].messages.push({
