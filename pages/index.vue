@@ -12,37 +12,37 @@
       </div>
       <div class="dashboard__box-content requests-content">
         <RequestItem
-          v-for="(request, key) in requests"
-          :key="key"
-          class="active"
-          online
-          time="2 мин."
-          :message="request.messages[request.messages.length - 1].text"
-          :name="request.name"
-          @click="setActiveRequest(key)"
+          v-for="request in requests"
+          :key="request.id"
+          :name="request.userFrom.username"
+          :avatar="request.userFrom.avatar"
+          :address="request.userFrom.profile[0].address"
+          :online="request.status === 'active'"
+          @click="setActiveRequestId(request.id)"
+          :class="{
+            active: activeRequestId === request.id,
+            completed: request.status === 'completed',
+          }"
         />
-        <p class="empty" v-if="!Object.keys(requests).length">
-          Нет активных обращений
-        </p>
+        <p class="empty" v-if="!requests.length">Нет обращений</p>
       </div>
     </div>
     <div class="dashboard__box chat-box">
-      <Chat v-if="activeRequest" />
+      <Chat v-if="activeRequest" :activeRequest="activeRequest" />
       <p class="empty" v-else>Выберите чат</p>
     </div>
-    <div class="dashboard__box info">
+    <!--<div class="dashboard__box info" v-if="activeRequest">
       <div class="dashboard__box-header">
         <h3 class="dashboard__box-title">Данные клиента</h3>
       </div>
       <div class="dashboard__box-content">
-        <div v-if="activeRequest">
-          <p>Клиент: {{ activeRequestData.name }}</p>
+        <div>
+          <p>Клиент: {{ activeRequest.userFrom.username }}</p>
           <p>Магазин: Ленина 32</p>
           <p>Количество обращений: 0</p>
         </div>
-        <p class="empty" v-else>Выберите клиента</p>
       </div>
-    </div>
+    </div>-->
   </div>
 </template>
 
@@ -50,11 +50,30 @@
 import { storeToRefs } from "pinia";
 
 const store = useAppStore();
-const { setActiveRequest, resetActiveRequest } = store;
-const { requests, activeRequest } = storeToRefs(store);
+const { fetchCurrentRequest } = store;
+const { requests, socket } = storeToRefs(store);
 
-const activeRequestData = computed(() => requests.value[activeRequest.value]);
-const text = ref("Lorem ipsum dolor sit amet");
+const activeRequest = ref(null);
+const activeRequestId = ref(null);
+
+const setActiveRequestId = (id) => {
+  activeRequestId.value = id;
+};
+
+const updateRequest = () => {
+  if (!Number.isInteger(activeRequestId.value)) return;
+  fetchCurrentRequest(activeRequestId.value).then((request) => {
+    activeRequest.value = request.data;
+  });
+};
+
+socket.value.on("newMessage", () => {
+  updateRequest();
+});
+
+watch([activeRequestId, requests], () => {
+  updateRequest();
+});
 </script>
 
 <style lang="scss" scoped>
@@ -62,11 +81,11 @@ const text = ref("Lorem ipsum dolor sit amet");
   padding: 25px;
   background: $background;
 
-  display: grid;
-  grid-template-columns: 2.5fr 7fr 2.5fr;
+  display: flex;
   gap: 25px;
 
   height: 100%;
+  overflow: hidden;
 
   & .empty {
     padding: 0 12px;
@@ -85,6 +104,7 @@ const text = ref("Lorem ipsum dolor sit amet");
     overflow: hidden;
 
     &.chat-box {
+      flex-grow: 1;
       .empty {
         display: flex;
         justify-content: center;
@@ -112,10 +132,14 @@ const text = ref("Lorem ipsum dolor sit amet");
     &-content {
       padding: 0 15px 15px;
       flex-grow: 1;
+      overflow: auto;
     }
   }
 
   .requests {
+    width: 280px;
+    flex-shrink: 0;
+
     &__active-tab {
       width: 100%;
       padding: 10px;
@@ -135,6 +159,7 @@ const text = ref("Lorem ipsum dolor sit amet");
 
     &-content {
       //margin-top: 15px;
+
       padding: 0 0 15px;
 
       & .request-item:last-of-type {
@@ -144,6 +169,7 @@ const text = ref("Lorem ipsum dolor sit amet");
   }
 
   .info {
+    width: 250px;
     & .dashboard__box-title {
       margin-bottom: 0;
     }

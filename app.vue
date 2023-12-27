@@ -11,43 +11,56 @@ import io from "socket.io-client";
 import { storeToRefs } from "pinia";
 
 const store = useAppStore();
-const { setUser } = store;
-const { activeRequest } = storeToRefs(store);
+const { setSocket, fetchRequests } = store;
+const { socket, requests } = storeToRefs(store);
 
 const user = useStrapiUser();
 const token = useStrapiToken();
 
-setUser(user.value);
+const handleFetchRequests = () => {
+  fetchRequests().then(() => {
+    const activeRequests = requests.value.filter((r) => r.status === "active");
+
+    if (activeRequests.length) {
+      socket.value.emit("join");
+    }
+  });
+};
 
 watch(
   user,
   () => {
     if (user.value) {
-      const socket = io("ws://localhost:1337", {
+      const socketInstance = io("ws://localhost:1337", {
         query: {
           jwt: token.value,
         },
       });
 
-      socket.emit("join");
+      setSocket(socketInstance);
+
+      socket.value.emit("join");
+      socket.value.on("newRequest", () => {
+        console.log("NNNNNNEEEEWWW");
+        handleFetchRequests();
+      });
+      socket.value.on("requestCompleted", () => {
+        handleFetchRequests();
+      });
     }
   },
   { immediate: true }
 );
 
-onMounted(() => {
-  //socket.emit("join", {});
-  //console.log(socket.id);
-  //socket.emit("join", {
-  //  username: "Василий",
-  //  userId: "1",
-  //  //groupId: 5,
-  //  message: "Privet",
-  //});
-  //socket.emit("message", {
-  //  text: "dsafkdsfkj",
-  //});
-});
+watch(
+  user,
+  () => {
+    if (user.value) {
+      handleFetchRequests();
+    }
+  },
+  { immediate: true }
+);
 </script>
 
 <style lang="scss">

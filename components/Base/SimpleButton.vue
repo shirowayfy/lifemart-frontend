@@ -18,6 +18,7 @@
   flex-shrink: 0;
   background: transparent;
   cursor: pointer;
+  position: relative;
 
   &.green {
     background: $primary;

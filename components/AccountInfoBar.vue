@@ -1,18 +1,23 @@
 <template>
   <div class="account-info">
-    <img src="/demo-user.png" alt="" class="account-info__image" />
+    <img src="/demo-user.jpeg" alt="" class="account-info__image" />
     <div class="account-info__content">
-      <p class="account-info__name">Иванов Иван</p>
+      <p class="account-info__name">{{ user.username }}</p>
       <p class="account-info__role">Сотрудник СЗ</p>
     </div>
-    <button class="btn account-info__logout">
-      <Icon class="account-info__logout-icon" name="ph:user" filled />
-      <span>Профиль</span>
+    <button class="btn account-info__logout" @click="logout">
+      <span>Выйти</span>
+      <Icon class="account-info__logout-icon" name="ph:sign-out" filled />
     </button>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+const store = useAppStore();
+const { logout } = store;
+
+const user = useStrapiUser();
+</script>
 
 <style lang="scss" scoped>
 .account-info {
@@ -24,6 +29,9 @@
     height: 50px;
 
     margin-right: 15px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid $border-color;
   }
 
   &__content {
@@ -43,9 +51,12 @@
   }
 
   &__logout {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
     &-icon {
       font-size: 16px;
-      margin-right: 10px;
     }
   }
 }

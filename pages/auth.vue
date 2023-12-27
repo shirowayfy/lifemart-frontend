@@ -21,8 +21,6 @@ definePageMeta({
   layout: "empty",
 });
 
-const { setUser } = useAppStore();
-
 const { login } = useStrapiAuth();
 const router = useRouter();
 
@@ -36,10 +34,8 @@ const submit = async () => {
     const user = useStrapiUser();
 
     if (user.value) {
-      setUser(user.value);
+      router.push("/");
     }
-
-    router.push("/");
   } catch (e) {}
 };
 </script>

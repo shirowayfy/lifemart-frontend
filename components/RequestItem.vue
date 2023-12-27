@@ -1,13 +1,13 @@
 <template>
   <div class="request-item">
     <div class="request-item__image">
-      <img src="/demo-user.png" alt="" />
+      <img :src="media + avatar?.url" alt="" />
       <div class="request-item__status" :class="{ completed, online }"></div>
     </div>
     <div class="request-item__content">
       <p class="request-item__name">{{ name }}</p>
       <div class="request-item__info">
-        <span>{{ formattedMessage }}</span>
+        <span>{{ address }}</span>
         <!--<span class="dot"></span>
         <span>{{ time }}</span>-->
       </div>
@@ -19,6 +19,8 @@
 </template>
 
 <script setup>
+const media = useStrapiMedia();
+
 const props = defineProps({
   unread: {
     type: Number,
@@ -42,6 +44,12 @@ const props = defineProps({
   name: {
     type: String,
     required: true,
+  },
+  avatar: {
+    type: Object,
+  },
+  address: {
+    type: String,
   },
 });
 
@@ -85,6 +93,7 @@ const formattedMessage = computed(() => {
       width: 100%;
       height: 100%;
       border-radius: 50%;
+      object-fit: cover;
     }
   }
 

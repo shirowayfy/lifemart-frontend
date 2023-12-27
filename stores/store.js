@@ -4,47 +4,57 @@ export const useAppStore = defineStore("app", {
   state: () => {
     return {
       socket: null,
-      user: null,
-      activeRequest: null,
-      requests: {},
+      requests: [],
     };
   },
   actions: {
     setSocket(socket) {
       this.socket = socket;
     },
-    setUser(user) {
-      this.user = user;
-    },
-    addMessage(id, from, text, time) {
-      this.requests[id].messages.push({
-        text,
-        time,
-        user: from,
+    async fetchCurrentRequest(id) {
+      const { findOne } = useStrapi();
+
+      return await findOne("requests", id, {
+        populate: {
+          userFrom: {
+            populate: {
+              avatar: true,
+            },
+          },
+          messages: {
+            populate: {
+              file: true,
+              userFrom: true,
+            },
+          },
+        },
       });
     },
-    addRequest(id, name, text, time) {
-      if (!this.requests[id]) {
-        this.requests[id] = {
-          messages: [],
-        };
-      }
+    async fetchRequests() {
+      const { find } = useStrapi();
+      const user = useStrapiUser();
 
-      this.requests[id].name = name;
+      this.requests = await find("requests", {
+        populate: {
+          userFrom: {
+            populate: {
+              avatar: true,
+              profile: true,
+            },
+          },
+        },
+        filters: { userWorker: user.value.id },
+      }).then((res) => res.data.sort((a, b) => b.id - a.id));
+    },
 
-      this.addMessage(id, id, text, time);
-    },
-    sendMessage(text) {
-      this.socket.emit("message", {
-        name: this.user.name,
-        text,
-      });
-    },
-    setActiveRequest(id) {
-      this.activeRequest = id;
-    },
-    resetActiveRequest() {
-      this.activeRequest = null;
+    logout() {
+      const { logout } = useStrapiAuth();
+
+      navigateTo({ path: "/auth" });
+      logout();
+
+      this.requests = [];
+      this.socket = null;
     },
   },
 });

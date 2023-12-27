@@ -9,14 +9,15 @@
       v-model="modelValue"
       :placeholder="placeholder"
       :type="type"
-      id="test"
       :disabled="disabled"
+      ref="input"
     />
   </label>
 </template>
 
 <script setup>
 const modelValue = defineModel();
+const input = ref(null);
 
 defineProps({
   icon: {
@@ -33,6 +34,10 @@ defineProps({
     type: Boolean,
     default: false,
   },
+});
+
+defineExpose({
+  focus: () => input.value.focus(),
 });
 </script>
 
@@ -64,7 +69,7 @@ defineProps({
     padding: 8px;
     margin: 0;
     border: none;
-    font-size: 18px;
+    font-size: 16px;
     background: #f2f9ff;
   }
 
