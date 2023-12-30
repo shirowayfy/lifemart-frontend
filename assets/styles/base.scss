@@ -63,3 +63,19 @@ a {
 //  width: calc(100vw);
 //  margin: 0 auto;
 //}
+
+.page-container {
+  padding: 25px;
+  background: $background;
+
+  height: 100%;
+  overflow: hidden;
+}
+
+.box {
+  background: rgba(#fff, 0.6);
+  border-radius: 10px;
+  border: 1px solid $border-color;
+
+  overflow: hidden;
+}

@@ -3,7 +3,7 @@
     <div class="chat__header">
       <div class="chat__user">
         <div class="chat__user-img">
-          <img :src="media + activeRequest.userFrom.avatar.url" alt="" />
+          <img :src="activeRequest.userFrom.avatar.url" alt="" />
         </div>
         <div class="chat__user-info">
           <p class="chat__user-name">{{ activeRequest.userFrom.username }}</p>
@@ -32,11 +32,11 @@
           <img
             class="file__image"
             v-if="message.file.mime.includes('image')"
-            :src="media + message.file.url"
+            :src="message.file.url"
             alt=""
           />
           <a
-            :href="media + message.file.url"
+            :href="message.file.url"
             target="_blank"
             download
             class="file__file"

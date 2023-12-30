@@ -21,6 +21,12 @@ export default defineNuxtConfig({
       },
     },
   },
+  runtimeConfig: {
+    public: {
+      STRAPI_URL: process.env.STRAPI_URL,
+      SOCKET_URL: process.env.SOCKET_URL,
+    },
+  },
   ssr: false,
   image: {
     provider: "netlify",

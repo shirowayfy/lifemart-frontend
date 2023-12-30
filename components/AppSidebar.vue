@@ -11,15 +11,15 @@
           </NuxtLink>
         </li>
         <li class="nav__links-item">
-          <NuxtLink class="nav-link" to="/">
+          <NuxtLink class="nav-link" to="/stats">
             <Icon class="nav-link__icon" name="ph:chart-line" />
           </NuxtLink>
         </li>
-        <li class="nav__links-item">
-          <NuxtLink class="nav-link" to="/">
+        <!--<li class="nav__links-item">
+          <NuxtLink class="nav-link" to="/profile">
             <Icon class="nav-link__icon" name="ph:address-book" />
           </NuxtLink>
-        </li>
+        </li>-->
       </ul>
     </nav>
   </aside>
@@ -53,12 +53,12 @@
     align-items: center;
     gap: 15px;
 
-    &-item {
+    &-item a {
       border-radius: 8px;
       transition: all 0.2s;
       color: darkgray;
 
-      &.active,
+      &.router-link-active,
       &:hover {
         background: rgba($primary, 0.1);
         color: $primary;

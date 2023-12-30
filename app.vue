@@ -9,6 +9,8 @@
 <script setup>
 import io from "socket.io-client";
 import { storeToRefs } from "pinia";
+const cfg = useRuntimeConfig();
+const { SOCKET_URL } = cfg.public;
 
 const store = useAppStore();
 const { setSocket, fetchRequests } = store;
@@ -31,7 +33,7 @@ watch(
   user,
   () => {
     if (user.value) {
-      const socketInstance = io("ws://localhost:1337", {
+      const socketInstance = io(SOCKET_URL, {
         query: {
           jwt: token.value,
         },

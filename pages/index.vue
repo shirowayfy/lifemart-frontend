@@ -1,6 +1,6 @@
 <template>
-  <div class="dashboard">
-    <div class="dashboard__box requests">
+  <div class="page-container dashboard">
+    <div class="box dashboard__box requests">
       <div class="dashboard__box-header">
         <h3 class="dashboard__box-title">Обращения</h3>
         <div class="dashboard__box-row">
@@ -27,7 +27,7 @@
         <p class="empty" v-if="!requests.length">Нет обращений</p>
       </div>
     </div>
-    <div class="dashboard__box chat-box">
+    <div class="box dashboard__box chat-box">
       <Chat v-if="activeRequest" :activeRequest="activeRequest" />
       <p class="empty" v-else>Выберите чат</p>
     </div>
@@ -78,14 +78,8 @@ watch([activeRequestId, requests], () => {
 
 <style lang="scss" scoped>
 .dashboard {
-  padding: 25px;
-  background: $background;
-
   display: flex;
   gap: 25px;
-
-  height: 100%;
-  overflow: hidden;
 
   & .empty {
     padding: 0 12px;
@@ -94,14 +88,8 @@ watch([activeRequestId, requests], () => {
   }
 
   &__box {
-    background: rgba(#fff, 0.6);
-    border-radius: 10px;
-    border: 1px solid $border-color;
-
     display: flex;
     flex-direction: column;
-
-    overflow: hidden;
 
     &.chat-box {
       flex-grow: 1;

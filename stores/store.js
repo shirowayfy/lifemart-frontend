@@ -5,6 +5,7 @@ export const useAppStore = defineStore("app", {
     return {
       socket: null,
       requests: [],
+      stats: null,
     };
   },
   actions: {
@@ -46,7 +47,13 @@ export const useAppStore = defineStore("app", {
         filters: { userWorker: user.value.id },
       }).then((res) => res.data.sort((a, b) => b.id - a.id));
     },
-
+    fetchStats() {
+      const client = useStrapiClient();
+      const user = useStrapiUser();
+      client("/analytic/" + user.value.id).then((res) => {
+        this.stats = res.data.analytic;
+      });
+    },
     logout() {
       const { logout } = useStrapiAuth();
 
