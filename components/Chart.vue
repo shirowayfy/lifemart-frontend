@@ -88,17 +88,17 @@ const chartData = ref({
       cubicInterpolationMode: "monotone",
       tension: 0.4,
     },
-    {
-      label: "Время выполнения",
-      data: Object.values(props.stats).map((v) => v[1]),
-      borderColor: "#AFE1AF",
-      pointStyle: "circle",
-      pointRadius: 5,
-      pointHoverRadius: 8,
-      fill: false,
-      cubicInterpolationMode: "monotone",
-      tension: 0.4,
-    },
+    //{
+    //  label: "Время выполнения",
+    //  data: Object.values(props.stats).map((v) => v[1]),
+    //  borderColor: "#AFE1AF",
+    //  pointStyle: "circle",
+    //  pointRadius: 5,
+    //  pointHoverRadius: 8,
+    //  fill: false,
+    //  cubicInterpolationMode: "monotone",
+    //  tension: 0.4,
+    //},
   ],
 });
 

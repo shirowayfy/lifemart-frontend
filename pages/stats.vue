@@ -13,8 +13,6 @@
           </p>
         </div>
         <div class="box stats__box work">
-          <!--<h3 class="stats__box-title">Средняя оценка</h3>
-          <p class="stats__box-value">0</p>-->
           <p class="stats__box-title">В разработке</p>
         </div>
       </div>
@@ -36,6 +34,7 @@ onMounted(() => {
 });
 
 const roundValue = (v) => {
+  if (v > 10) return Math.round(v);
   return v.toFixed(2);
 };
 </script>
