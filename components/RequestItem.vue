@@ -1,7 +1,7 @@
 <template>
   <div class="request-item">
     <div class="request-item__image">
-      <img :src="avatar?.url" alt="" />
+      <img :src="media + avatar?.url" alt="" />
       <div class="request-item__status" :class="{ completed, online }"></div>
     </div>
     <div class="request-item__content">
